@@ -24,9 +24,9 @@ int main(void)
     DP0_GOE = 0x00;
     DP0_GIE = 0x00;
 
-    DP0_DM2 = 0x00;
-    DP0_DM1 = 0xFF;
-    DP0_DM0 = 0xFF;
+    DP1_DM2 = 0x00;
+    DP1_DM1 = 0xFF;
+    DP1_DM0 = 0xFF;
 
     DP1_GOE = 0x00;
     DP1_GIE = 0x00;
