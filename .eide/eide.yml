@@ -22,21 +22,26 @@ targets:
   Debug:
     cppPreprocessAttrs:
       defineList: []
-      incList: []
+      incList:
+        - driver
+        - platform/241/core
       libList: []
     excludeList: []
     toolchain: RISCV_GCC
     toolchainConfigMap:
       RISCV_GCC:
-        linkerScriptPath: undefined.lds
+        linkerScriptPath: link/hm241_n208_link.ld
         options:
           version: 2
-          afterBuildTasks: []
+          afterBuildTasks:
+            - name: new postbuild task
+              abortAfterFailed: false
+              command: echo build ${ProjectName}.lst & ${ToolchainRoot}//bin//${CompilerPrefix}objdump -t -T -S ${OutDir}//${ProjectName}.elf >${OutDir}//${ProjectName}.lst & echo file size & ${ToolchainRoot}//bin//${CompilerPrefix}size ${OutDir}//${ProjectName}.elf
+              disable: false
           asm-compiler:
             ASM_FLAGS: -Wl,-Bstatic
           beforeBuildTasks: []
           c/cpp-compiler:
-            CXX_FLAGS: ""
             C_FLAGS: -Wl,-Bstatic
             language-c: c11
             language-cpp: c++11
@@ -53,8 +58,8 @@ targets:
           linker:
             $outputTaskExcludes:
               - .bin
+            $toolName: auto
             LD_FLAGS: -Wl,--cref -Wl,--no-relax -nostartfiles
-            LIB_FLAGS: ""
             output-format: elf
             remove-unused-input-sections: true
     uploadConfigMap:
